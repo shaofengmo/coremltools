@@ -1442,11 +1442,11 @@ def div(context, node):
 @register_torch_op(torch_alias=["__getitem__"])
 def getitem(context, node):
     inputs = _get_inputs(context, node)
-    raise NotImplementedError(
-        f"inputs={inputs}, inputs type = {type(inputs)}, len(inputs)={len(inputs)}"
-    )
     shape = inputs[0].val
     dim = inputs[1].val
+    raise NotImplementedError(
+        f"inputs[0].val={shape}, inputs[1].val={dim}"
+    )
     val = shape[dim]
     x = mb.const(val=val, name=node.name)
     context.add(x)
