@@ -1442,6 +1442,7 @@ def div(context, node):
 @register_torch_op(torch_alias=["__getitem__"])
 def getitem(context, node):
     inputs = _get_inputs(context, node)
+    print(inputs)
     shape = inputs[0].val
     dim = inputs[1].val
     val = shape[dim]
