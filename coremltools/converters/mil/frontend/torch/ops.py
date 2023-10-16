@@ -1442,14 +1442,11 @@ def div(context, node):
 @register_torch_op(torch_alias=["__getitem__"])
 def getitem(context, node):
     inputs = _get_inputs(context, node)
-    shape = inputs[0].val
-    dim = inputs[1].val
-    raise NotImplementedError(
-        f"inputs[0].val={shape}, inputs[1].val={dim}"
-    )
-    val = shape[dim]
-    x = mb.const(val=val, name=node.name)
-    context.add(x)
+    if isinstance(inputs[0], list):
+        index = inputs[1].val # == 1
+        val = inputs[0][index]
+        x = mb.const(val=val, name=node.name)
+        context.add(x)
 
 @register_torch_op(torch_alias=["floordiv"])
 def floor_divide(context, node):
